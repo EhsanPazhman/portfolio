@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminUserSeeder::class,
+            ProfileSeeder::class,
         ]);
         $numUsers = rand(10, 30);
         User::factory($numUsers)->create();

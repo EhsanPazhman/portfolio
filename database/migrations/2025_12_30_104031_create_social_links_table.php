@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('social_links', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('profile_id')->constrained('profiles')->cascadeOnDelete();
             $table->string('platform');
             $table->string('url');
             $table->string('icon')->nullable();

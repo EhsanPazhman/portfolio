@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Str;
 
 class AdminUserSeeder extends Seeder
 {
@@ -16,8 +17,12 @@ class AdminUserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Ehsan Pazhman',
-            'email' => 'ehsanpazhman@gmail.com',  
-            'password' => Hash::make('password'), 
+            'email' => 'ehsanpazhman@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password'),
+            'email_verified_at' => now(),
+            'role' => 'admin',
+            'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
