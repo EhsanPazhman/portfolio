@@ -37,5 +37,11 @@
             <livewire:projects />
         </div>
     </section>
+    <!-- Experiences Section -->
+    <section id="experiences" class="py-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <livewire:experiences />
+        </div>
+    </section>
 
 </div>

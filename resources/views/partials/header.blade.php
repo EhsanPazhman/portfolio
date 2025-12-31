@@ -3,7 +3,7 @@
     <a href="{{ route('home') }}">Home</a>
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
-    <a href="#experience">Experience</a>
+    <a href="#experiences">Experiences</a>
     <a href="#contact">Contact</a>
     <a href="#admin">Admin</a>
   </nav>

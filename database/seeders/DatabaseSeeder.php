@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             ProfileSeeder::class,
             ProjectSeeder::class,
+            ExperienceSeeder::class,
         ]);
         $numUsers = rand(10, 30);
         User::factory($numUsers)->create();
