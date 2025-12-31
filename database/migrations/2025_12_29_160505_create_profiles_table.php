@@ -17,7 +17,7 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->string('job_title');
             $table->string('bio', 255);
-            $table->text('about_text')->nullable();
+            $table->text('experience_summary')->nullable();
             $table->string('avatar')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();

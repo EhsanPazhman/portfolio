@@ -10,7 +10,7 @@ class Home extends Component
     public $owner;
     public function render()
     {
-        $this->owner = User::where('role', 'Admin')->first();
+        $this->owner = User::where('role', 'Admin')->firstOrFail();
         return view('livewire.home')->layout('layouts.app');
     }
 }

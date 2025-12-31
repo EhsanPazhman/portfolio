@@ -7,6 +7,7 @@ use App\Models\Skill;
 use App\Models\Project;
 use App\Models\Experience;
 use App\Models\SocialLink;
+use App\Models\Technology;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -40,8 +41,12 @@ class Profile extends Model
     {
         return $this->hasMany(SocialLink::class);
     }
-    public function slills(): HasMany
+    public function skills(): HasMany
     {
         return $this->hasMany(Skill::class);
+    }
+    public function technologies(): HasMany
+    {
+        return $this->hasMany(Technology::class);
     }
 }

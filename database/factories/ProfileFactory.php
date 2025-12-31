@@ -19,7 +19,7 @@ class ProfileFactory extends Factory
         return [
             'job_title' => 'Laravel Developer',
             'bio' => 'I build clean, scalable web applications using Laravel and modern technologies.',
-            'about_text' => $this->faker->paragraph(4),
+            'experience_summary' => 'Experience developing CRUD systems, admin dashboards, authentication systems, and scalable backend logic.',
             'avatar' => 'avatars/default.jpg',
             'status' => 'active',
         ];
