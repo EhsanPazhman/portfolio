@@ -13,9 +13,14 @@
 
         <!-- Technologies -->
         <h2 class="text-2xl font-semibold mt-8 mb-4">Technologies</h2>
-        @foreach ($owner->profile->technologies as $technology)
-            <p>{{ $technology->name }}</p>
-        @endforeach
+        <p>
+            @foreach ($owner->profile->technologies as $technology)
+                <span>{{ $technology->name }}</span>
+                @if (!$loop->last)
+                    ,
+                @endif
+            @endforeach
+        </p>
         <!-- Experience Summary -->
         <h2 class="text-2xl font-semibold mt-8 mb-4">Experience Summary</h2>
         <p>{{ $owner->profile->experience_summary }}</p>

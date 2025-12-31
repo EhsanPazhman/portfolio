@@ -23,7 +23,7 @@ class ExperienceFactory extends Factory
             'company' => $this->faker->company(),
             'start_date' => $start->format('Y-m-d'),
             'end_date' => $end ? $end->format('Y-m-d') : null,
-            'description' => $this->faker->paragraph(),
+            'description' => $this->faker->paragraph(3),
         ];
     }
 }

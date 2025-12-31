@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             ProfileSeeder::class,
             ProjectSeeder::class,
             ExperienceSeeder::class,
+            SkillSeeder::class,
+            SocialLinkSeeder::class,
+            TechnologySeeder::class,
         ]);
         $numUsers = rand(10, 30);
         User::factory($numUsers)->create();
