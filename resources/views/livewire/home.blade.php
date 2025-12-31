@@ -1,11 +1,6 @@
 <div>
     <!-- Left Social Sidebar -->
-    <aside class="fixed left-0 top-1/3 hidden md:flex flex-col gap-4 p-3 bg-white shadow rounded-r-lg">
-        <a href="#" class="text-gray-600 hover:text-pink-500">LinkedIn</a>
-        <a href="#" class="text-gray-600 hover:text-pink-500">Instagram</a>
-        <a href="#" class="text-gray-600 hover:text-blue-500">Telegram</a>
-    </aside>
-
+    <livewire:social-sidebar />
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-center px-6">
         <div class="max-w-5xl w-full grid md:grid-cols-2 gap-10 items-center">
@@ -43,5 +38,11 @@
             <livewire:experiences />
         </div>
     </section>
-
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="max-w-5xl mx-auto px-6">
+            <livewire:contact />
+        </div>
+    </section>
 </div>

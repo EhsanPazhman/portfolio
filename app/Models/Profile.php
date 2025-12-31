@@ -37,7 +37,7 @@ class Profile extends Model
     {
         return $this->hasMany(Project::class);
     }
-    public function socialLinks(): HasMany
+    public function SocialLinks(): HasMany
     {
         return $this->hasMany(SocialLink::class);
     }

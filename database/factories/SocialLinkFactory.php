@@ -16,15 +16,21 @@ class SocialLinkFactory extends Factory
      */
     public function definition(): array
     {
+        $platformIcons = [
+            'Email'     => 'fa-solid fa-envelope',
+            'X'         => 'fa-brands fa-x-twitter',
+            'GitHub'    => 'fa-brands fa-github',
+            'LinkedIn'  => 'fa-brands fa-linkedin',
+            'Telegram'  => 'fa-brands fa-telegram',
+            'Instagram' => 'fa-brands fa-instagram',
+        ];
+
+        $platform = $this->faker->randomElement(array_keys($platformIcons));
+
         return [
-            'platform' => $this->faker->randomElement([
-                'GitHub',
-                'LinkedIn',
-                'Telegram',
-                'Instagram'
-            ]),
-            'url' => $this->faker->url(),
-            'icon' => null,
+            'platform'   => $platform,
+            'url'        => $this->faker->url(),
+            'icon'       => $platformIcons[$platform],
         ];
     }
 }
