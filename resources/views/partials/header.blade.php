@@ -5,6 +5,6 @@
     <a href="#projects">Projects</a>
     <a href="#experiences">Experiences</a>
     <a href="#contact">Contact</a>
-    <a href="#admin">Admin</a>
+    <a href="{{ route('admin') }}">Admin</a>
   </nav>
 </header>
