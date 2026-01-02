@@ -3,14 +3,14 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Project;
-use Livewire\Component;
 use App\Traits\HasModal;
-use Livewire\WithFileUploads;
 use Livewire\Attributes\Rule;
-use Illuminate\Support\Facades\Storage;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
+use App\Livewire\Admin\AdminComponent;
+use Illuminate\Support\Facades\Storage;
 
-class Projects extends Component
+class Projects extends AdminComponent
 {
     use HasModal, WithFileUploads;
 
@@ -112,6 +112,6 @@ class Projects extends Component
     {
         return view('livewire.admin.projects', [
             'projects' => Project::latest()->get()
-        ])->layout('layouts.admin');
+        ]);
     }
 }

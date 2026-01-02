@@ -1,6 +1,6 @@
 <div>
     <!-- Left Social Sidebar -->
-    <livewire:social-sidebar />
+    <livewire:web.social-sidebar />
     <!-- Hero Section -->
     <section class="min-h-screen flex items-center justify-center px-6">
         <div class="max-w-5xl w-full grid md:grid-cols-2 gap-10 items-center">
@@ -22,27 +22,27 @@
     <!-- About Section -->
     <section id="about" class="py-16 bg-gray-50">
         <div class="max-w-5xl mx-auto px-6">
-            <livewire:about />
+            <livewire:web.about />
         </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="py-16">
         <div class="max-w-5xl mx-auto px-6">
-            <livewire:projects />
+            <livewire:web.projects />
         </div>
     </section>
     <!-- Experiences Section -->
     <section id="experiences" class="py-16">
         <div class="max-w-5xl mx-auto px-6">
-            <livewire:experiences />
+            <livewire:web.experiences />
         </div>
     </section>
     </section>
     <!-- Contact Section -->
     <section id="contact" class="py-16">
         <div class="max-w-5xl mx-auto px-6">
-            <livewire:contact />
+            <livewire:web.contact />
         </div>
     </section>
 </div>

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Web;
 
 use App\Models\User;
-use Livewire\Component;
+use App\Livewire\Web\BaseComponent;
 
-class About extends Component
+class About extends BaseComponent
 {
     public $owner;
     public function render()
@@ -16,6 +16,6 @@ class About extends Component
                 'profile.technologies',
                 'profile.experiences'
             ])->firstOrFail();
-        return view('livewire.about')->layout('layouts.app');
+        return view('livewire.web.about');
     }
 }

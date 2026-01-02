@@ -3,13 +3,14 @@
 namespace App\Livewire\Admin;
 
 use App\Models\User;
-use Livewire\Component;
 use App\Traits\HasModal;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log; 
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Livewire\Admin\AdminComponent;
 
-class Users extends Component
+class Users extends AdminComponent
 {
     use HasModal;
 
@@ -85,7 +86,7 @@ class Users extends Component
 
     public function delete($id)
     {
-        if ($id === auth()->id()) {
+        if ($id === Auth::id()) {
             $this->dispatch('notify', 'Security Alert: Cannot delete your own account!');
             return;
         }
@@ -103,6 +104,6 @@ class Users extends Component
     {
         return view('livewire.admin.users', [
             'users' => User::latest()->get()
-        ])->layout('layouts.admin');
+        ]);
     }
 }

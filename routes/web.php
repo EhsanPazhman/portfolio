@@ -1,7 +1,6 @@
 <?php
 
-use App\Livewire\Home;
-use App\Livewire\About;
+use App\Livewire\Web\Home;
 use App\Livewire\Admin\Users;
 use App\Livewire\Admin\Skills;
 use App\Livewire\Admin\Contacts;

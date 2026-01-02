@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Admin;
 
-use Livewire\Component;
+use App\Livewire\Admin\AdminComponent;
 
-class Contacts extends Component
+class Contacts extends AdminComponent
 {
     public function render()
     {
-        return view('livewire.admin.contacts')->layout('layouts.admin');
+        return view('livewire.admin.contacts');
     }
 }

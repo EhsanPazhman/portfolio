@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Web;
 
 use App\Models\User;
-use Livewire\Component;
+use App\Livewire\Web\BaseComponent;
 
-class Experiences extends Component
+class Projects extends BaseComponent
 {
     public $owner;
     public function render()
     {
         $this->owner = User::where('role', 'admin')
             ->with([
-                'profile.experiences'
+                'profile.projects'
             ])->firstOrFail();
-        return view('livewire.experiences')->layout('layouts.app');
+        return view('livewire.web.projects');
     }
 }

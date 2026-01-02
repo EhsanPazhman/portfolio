@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Admin;
 
-use Livewire\Component;
+use App\Livewire\Admin\AdminComponent;
 
-class Experiences extends Component
+class Experiences extends AdminComponent
 {
     public function render()
     {
-        return view('livewire.admin.experiences')->layout('layouts.admin');
+        return view('livewire.admin.experiences');
     }
 }

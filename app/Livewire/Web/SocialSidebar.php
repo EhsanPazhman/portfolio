@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Web;
 
 use App\Models\User;
-use Livewire\Component;
+use App\Livewire\Web\BaseComponent;
 
-class SocialSidebar extends Component
+class SocialSidebar extends BaseComponent
 {
     public $owner;
     public bool $open = false;
@@ -17,6 +17,6 @@ class SocialSidebar extends Component
     public function render()
     {
         $this->owner = User::where('role', 'Admin')->firstOrFail();
-        return view('livewire.social-sidebar');
+        return view('livewire.web.social-sidebar');
     }
 }

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Web;
 
 use App\Models\User;
-use Livewire\Component;
+use App\Livewire\Web\BaseComponent;
 
-class Home extends Component
+class Home extends BaseComponent
 {
     public $owner;
     public function render()
     {
         $this->owner = User::where('role', 'Admin')->firstOrFail();
-        return view('livewire.home')->layout('layouts.app');
+        return view('livewire.web.home');
     }
 }
