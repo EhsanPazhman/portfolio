@@ -39,7 +39,6 @@
             </div>
         </main>
     </div>
-    @include('partials.admin.modal')
     @livewireScripts
     <script>
         function toggleSidebar() {
@@ -53,39 +52,6 @@
                 sidebar.classList.replace('w-20', 'w-64');
                 sidebarTexts.forEach(el => el.classList.remove('hidden'));
             }
-        }
-
-        function openModal(type) {
-            if (document.getElementById('modal-title')) {
-                document.getElementById('modal-title').innerText = 'Create ' + type;
-            }
-            document.getElementById('main-modal').classList.replace('hidden', 'flex');
-        }
-
-        function closeModal() {
-            document.getElementById('main-modal').classList.replace('flex', 'hidden');
-        }
-
-        function switchTab(tabId) {
- 
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.add('hidden');
-            });
-
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-gray-800', 'text-white');
-                btn.classList.add('text-gray-400', 'hover:bg-gray-800/50');
-            });
-            document.getElementById('btn-' + tabId).classList.add('bg-gray-800', 'text-white');
-            document.getElementById('btn-' + tabId).classList.remove('text-gray-400', 'hover:bg-gray-800/50');
-            const titles = {
-                'dashboard': 'Dashboard Overview',
-                'users': 'Users Management',
-                'projects': 'Projects List'
-            };
-            document.getElementById('current-title').innerText = titles[tabId];
         }
     </script>
 

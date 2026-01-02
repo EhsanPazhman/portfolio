@@ -11,6 +11,7 @@ class SocialLink extends Model
     use HasFactory;
 
     protected $fillable = [
+        'profile_id',
         'platform',
         'url',
         'icon'

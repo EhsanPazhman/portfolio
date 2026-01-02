@@ -21,7 +21,7 @@ class Profile extends Model
         'user_id',
         'job_title',
         'bio',
-        'about_text',
+        'experience_summary',
         'avatar',
         'status',
     ];

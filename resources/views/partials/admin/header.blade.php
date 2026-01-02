@@ -13,9 +13,8 @@
                 <h2 id="current-title" class="text-lg font-semibold text-white tracking-tight">Dashboard Overview</h2>
             </div>
             <div class="flex items-center gap-3">
-                <span
-                    class="hidden md:inline text-xs bg-emerald-500/10 text-emerald-500 px-3 py-1 rounded-full border border-emerald-500/20 font-medium">System
-                    Online</span>
+                <a href="/"> <span
+                        class="hidden md:inline text-xs bg-emerald-500/10 text-emerald-500 px-3 py-1 rounded-full border border-emerald-500/20 font-medium">Go
+                        to site</span></a>
             </div>
         </header>
-        <!-- END HEADER -->

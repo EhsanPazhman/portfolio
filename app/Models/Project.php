@@ -11,10 +11,12 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = [
+        'profile_id',
         'title',
         'description',
         'image',
-        'link'
+        'github_url',
+        'demo_url',
     ];
         public function profile()
     {

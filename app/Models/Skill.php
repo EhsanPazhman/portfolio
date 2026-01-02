@@ -11,6 +11,7 @@ class Skill extends Model
     use HasFactory;
         protected $fillable = [
         'profile_id',
+        'name',
         'level',
     ];
     public function profile()
