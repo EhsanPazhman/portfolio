@@ -21,7 +21,26 @@
 </head>
 
 <body class="text-gray-300 overflow-hidden">
-
+    <div x-data="{
+        notifications: [],
+        add(message) {
+            const id = Date.now();
+            this.notifications.push({ id: id, msg: message });
+            setTimeout(() => {
+                this.notifications = this.notifications.filter(n => n.id !== id);
+            }, 3000);
+        }
+    }" @notify.window="add($event.detail)">
+        <div class="fixed top-8 right-8 z-[999] space-y-3">
+            <template x-for="note in notifications" :key="note.id">
+                <div x-transition
+                    class="bg-white text-black px-6 py-4 rounded-2xl shadow-2xl font-bold text-xs uppercase tracking-widest flex items-center gap-3 border border-gray-100">
+                    <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+                    <span x-text="note.msg"></span>
+                </div>
+            </template>
+        </div>
+    </div>
     <div class="flex h-screen w-full">
 
         <!-- SIDEBAR -->

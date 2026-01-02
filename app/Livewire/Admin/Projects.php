@@ -2,19 +2,20 @@
 
 namespace App\Livewire\Admin;
 
-use Storage;
 use App\Models\Project;
 use Livewire\Component;
 use App\Traits\HasModal;
-use Livewire\Attributes\Rule;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Rule;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class Projects extends Component
 {
     use HasModal, WithFileUploads;
 
     public $project_id;
-    public $profile_id = 1;
+    public $profile_id = 1; 
 
     #[Rule('required|min:3|max:255')]
     public $title;
@@ -22,10 +23,10 @@ class Projects extends Component
     #[Rule('nullable|string')]
     public $description;
 
-    #[Rule('nullable|image|max:2048')] // 2MB Max
+    #[Rule('nullable|image|max:2048')]
     public $image;
 
-    public $old_image; // To store existing image path
+    public $old_image;
 
     #[Rule('nullable|url')]
     public $github_url;
@@ -54,30 +55,31 @@ class Projects extends Component
     {
         $this->validate();
 
-        $data = [
-            'profile_id'     => $this->profile_id,
-            'title'       => $this->title,
-            'description' => $this->description,
-            'github_url'  => $this->github_url,
-            'demo_url'    => $this->demo_url,
-        ];
+        try {
+            $project = $this->project_id ? Project::findOrFail($this->project_id) : new Project;
 
-        if ($this->image) {
-            if ($this->project_id) {
-                $project = Project::find($this->project_id);
-                if ($project && $project->image) {
+            $project->profile_id  = $this->profile_id ;
+            $project->title = $this->title;
+            $project->description = $this->description;
+            $project->github_url = $this->github_url;
+            $project->demo_url = $this->demo_url;
+
+            if ($this->image) {
+                if ($project->image && Storage::disk('public')->exists($project->image)) {
                     Storage::disk('public')->delete($project->image);
                 }
+                $project->image = $this->image->store('projects', 'public');
             }
 
-            $data['image'] = $this->image->store('projects', 'public');
+            $project->save();
+
+            $this->dispatch('notify', $this->project_id ? 'Project Updated' : 'Project Created');
+            $this->closeModal();
+            $this->resetInputFields();
+        } catch (\Exception $e) {
+            Log::error('Project Store Error: ' . $e->getMessage());
+            $this->dispatch('notify', 'Error: Transaction failed.');
         }
-
-        Project::updateOrCreate(['id' => $this->project_id], $data);
-
-        $this->dispatch('notify', $this->project_id ? 'Project Updated' : 'Project Created');
-        $this->closeModal();
-        $this->resetInputFields();
     }
 
     public function edit($id)
@@ -94,15 +96,17 @@ class Projects extends Component
 
     public function delete($id)
     {
-        $project = Project::findOrFail($id);
-        if ($project->image) {
-            Storage::disk('public')->delete($project->image);
+        try {
+            $project = Project::findOrFail($id);
+            if ($project->image && Storage::disk('public')->exists($project->image)) {
+                Storage::disk('public')->delete($project->image);
+            }
+            $project->delete();
+            $this->dispatch('notify', 'Project Removed');
+        } catch (\Exception $e) {
+            Log::error('Project Delete Error: ' . $e->getMessage());
         }
-
-        $project->delete();
-        $this->dispatch('notify', 'Project and its image removed');
     }
-
 
     public function render()
     {
