@@ -1,25 +1,35 @@
-<div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in duration-500">
-        
+<div class="space-y-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
         <!-- SKILLS SECTION -->
         <div class="space-y-6">
-            <div class="flex justify-between items-end">
-                <h3 class="text-lg font-bold text-white uppercase tracking-widest border-l-4 border-blue-600 pl-3">Skills List</h3>
-                <button onclick="openModal('Skill')" class="text-blue-500 hover:text-blue-400 text-xs font-bold uppercase tracking-tighter transition-all">+ Add Skill</button>
+            <div class="flex justify-between items-center">
+                <h3 class="text-xl font-black text-white uppercase tracking-tighter border-l-4 border-blue-600 pl-4">
+                    Skills</h3>
+                <button wire:click="openModalWithType('skill')"
+                    class="text-[10px] font-black text-blue-500 hover:text-white uppercase tracking-widest transition-all cursor-pointer">
+                    + Add Skill
+                </button>
             </div>
-            
-            <div class="bg-[#111827] border border-gray-800 rounded-2xl overflow-hidden">
+
+            <div class="bg-[#111827] border border-gray-800 rounded-3xl overflow-hidden shadow-xl">
                 <table class="w-full text-left">
-                    <tbody class="divide-y divide-gray-800">
-                        <tr class="hover:bg-gray-800/30 transition-all">
-                            <td class="px-6 py-4 text-sm font-medium text-gray-200">PHP / Laravel</td>
-                            <td class="px-6 py-4">
-                                <span class="px-2 py-0.5 bg-blue-500/10 text-blue-500 text-[10px] rounded border border-blue-500/20 font-bold uppercase tracking-widest">Advanced</span>
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <button class="text-gray-600 hover:text-red-500 transition-colors">×</button>
-                            </td>
-                        </tr>
+                    <tbody class="divide-y divide-gray-800/50">
+                        @foreach ($skills as $skill)
+                            <tr class="hover:bg-gray-800/10 transition-all">
+                                <td class="px-6 py-4 text-sm font-bold text-gray-200 uppercase">{{ $skill->name }}</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span
+                                        class="px-3 py-1 bg-blue-600/10 text-blue-500 text-[9px] rounded-full border border-blue-600/20 font-black uppercase">{{ $skill->level }}</span>
+                                </td>
+                                <td class="px-6 py-4 text-right space-x-2">
+                                    <button wire:click="openModalWithType('skill', {{ $skill->id }})"
+                                        class="text-gray-500 hover:text-white transition-colors cursor-pointer">✎</button>
+                                    <button wire:click="delete('skill', {{ $skill->id }})" wire:confirm="Remove?"
+                                        class="text-gray-700 hover:text-red-500 transition-colors cursor-pointer">×</button>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -27,26 +37,77 @@
 
         <!-- TECHNOLOGIES SECTION -->
         <div class="space-y-6">
-            <div class="flex justify-between items-end">
-                <h3 class="text-lg font-bold text-white uppercase tracking-widest border-l-4 border-emerald-600 pl-3">Tech Stack</h3>
-                <button onclick="openModal('Technology')" class="text-emerald-500 hover:text-emerald-400 text-xs font-bold uppercase tracking-tighter transition-all">+ Add Tech</button>
+            <div class="flex justify-between items-center">
+                <h3 class="text-xl font-black text-white uppercase tracking-tighter border-l-4 border-emerald-600 pl-4">
+                    Tech Stack</h3>
+                <button wire:click="openModalWithType('tech')"
+                    class="text-[10px] font-black text-emerald-500 hover:text-white uppercase tracking-widest transition-all cursor-pointer">
+                    + Add Tech
+                </button>
             </div>
-            
-            <div class="bg-[#111827] border border-gray-800 p-6 rounded-2xl">
-                <div class="flex flex-wrap gap-3">
-                    <!-- نمونه تکنولوژی -->
-                    <div class="group flex items-center gap-2 bg-[#0b0f1a] border border-gray-800 px-4 py-2 rounded-xl hover:border-emerald-500/50 transition-all">
-                        <span class="text-xs font-bold text-gray-300 uppercase tracking-widest">Docker</span>
-                        <button class="text-gray-700 group-hover:text-red-500 transition-colors">&times;</button>
+
+            <div class="bg-[#111827] border border-gray-800 p-8 rounded-3xl shadow-xl flex flex-wrap gap-4">
+                @foreach ($techs as $tech)
+                    <div
+                        class="group flex items-center gap-3 bg-gray-900/50 border border-gray-800 px-5 py-3 rounded-2xl hover:border-emerald-500/50 transition-all">
+                        <span
+                            class="text-xs font-bold text-gray-300 uppercase tracking-widest cursor-default">{{ $tech->name }}</span>
+                        <button wire:click="delete('tech', {{ $tech->id }})" wire:confirm="Remove?"
+                            class="text-gray-700 group-hover:text-red-500 transition-colors cursor-pointer text-lg font-bold">&times;</button>
                     </div>
-                    
-                    <div class="group flex items-center gap-2 bg-[#0b0f1a] border border-gray-800 px-4 py-2 rounded-xl hover:border-emerald-500/50 transition-all">
-                        <span class="text-xs font-bold text-gray-300 uppercase tracking-widest">Redis</span>
-                        <button class="text-gray-700 group-hover:text-red-500 transition-colors">&times;</button>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <!-- JOINT MODAL -->
+    @if ($isModalOpen)
+        <div class="fixed inset-0 bg-black/95 backdrop-blur-xl flex items-center justify-center z-[150] p-6">
+            <div
+                class="bg-[#111827] border border-gray-800 w-full max-w-md rounded-[2.5rem] shadow-3xl overflow-hidden animate-in zoom-in duration-300">
+                <div class="p-8 border-b border-gray-800 flex justify-between items-center bg-gray-900/20">
+                    <h3 class="text-lg font-black text-white uppercase tracking-widest">{{ $item_id ? 'Edit' : 'Add' }}
+                        {{ ucfirst($this->type) }}</h3>
+                    <button wire:click="closeModal"
+                        class="text-gray-500 hover:text-white text-2xl cursor-pointer">&times;</button>
+                </div>
+
+                <div class="p-10 space-y-6">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Name</label>
+                        <input type="text" wire:model.live="name"
+                            class="w-full bg-gray-900/50 border-2 border-gray-800 rounded-2xl px-6 py-4 text-white focus:border-blue-600 outline-none transition-all">
+                        @error('name')
+                            <p class="text-red-500 text-[10px] font-bold mt-1 uppercase">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    @if ($this->type === 'skill')
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-1">Proficiency
+                                Level</label>
+                            <select wire:model="level"
+                                class="w-full bg-gray-900/50 border-2 border-gray-800 rounded-2xl px-6 py-4 text-white focus:border-blue-600 outline-none transition-all appearance-none">
+                                <option value="">Select Level</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                            @error('level')
+                                <p class="text-red-500 text-[10px] font-bold mt-1 uppercase">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    @endif
+
+                    <div class="flex gap-4 pt-6">
+                        <button wire:click="closeModal"
+                            class="flex-1 px-8 py-5 rounded-2xl border-2 border-gray-800 text-gray-500 font-black text-[10px] uppercase tracking-widest hover:text-white transition-all cursor-pointer">Cancel</button>
+                        <button wire:click="store"
+                            class="flex-1 px-8 py-5 rounded-2xl bg-blue-600 text-white font-black text-[10px] uppercase tracking-widest shadow-2xl shadow-blue-600/30 hover:bg-blue-700 transition-all cursor-pointer">Save</button>
                     </div>
                 </div>
             </div>
         </div>
-
-    </div>
+    @endif
 </div>
