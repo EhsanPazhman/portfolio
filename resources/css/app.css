@@ -1,11 +1,72 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.css";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+    html:not(.dark) body {
+        background-color: #ffffff;
+        color: #0f172a;
+    }
+
+    html.dark body {
+        background-color: #020617;
+        color: #f1f5f9;
+    }
+
+    body {
+        @apply transition-colors duration-500;
+    }
+}
+
+.glass {
+    @apply backdrop-blur-xl border transition-all duration-500;
+}
+
+html.dark .glass {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+html:not(.dark) .glass {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+    html {
+        scroll-smooth: smooth;
+        scroll-padding-top: 100px;
+    }
+}
+
+@keyframes revealFade {
+    0% {
+        opacity: 0;
+        transform: translateY(80px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.reveal {
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
+.reveal.active {
+    animation: revealFade 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
