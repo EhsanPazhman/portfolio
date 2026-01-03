@@ -7,7 +7,7 @@
         </button>
     </div>
 
-    <div class="bg-[#111827] border border-gray-800 rounded-[2rem] overflow-hidden shadow-2xl">
+    <div class="bg-[#111827] border border-gray-800 rounded-4xl overflow-hidden shadow-2xl">
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr
@@ -43,7 +43,7 @@
     </div>
 
     @if ($isModalOpen)
-        <div class="fixed inset-0 bg-black/95 backdrop-blur-xl flex items-center justify-center z-[110] p-6">
+        <div class="fixed inset-0 bg-black/95 backdrop-blur-xl flex items-center justify-center z-110 p-6">
             <div
                 class="bg-[#111827] border border-gray-800 w-full max-w-2xl rounded-[2.5rem] shadow-3xl overflow-hidden animate-in zoom-in duration-300">
                 <div class="p-8 border-b border-gray-800 flex justify-between items-center bg-gray-900/20">
