@@ -31,7 +31,7 @@
             }, 3000);
         }
     }" @notify.window="add($event.detail)">
-        <div class="fixed top-8 right-8 z-[999] space-y-3">
+        <div class="fixed top-8 right-8 z-999 space-y-3">
             <template x-for="note in notifications" :key="note.id">
                 <div x-transition
                     class="bg-white text-black px-6 py-4 rounded-2xl shadow-2xl font-bold text-xs uppercase tracking-widest flex items-center gap-3 border border-gray-100">

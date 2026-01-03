@@ -29,7 +29,7 @@
                         </div>
                     </td>
                     <td class="px-8 py-6">
-                        <span class="text-xs text-gray-400 font-medium truncate max-w-[200px] block italic">{{ $msg->subject ?? 'No Subject' }}</span>
+                        <span class="text-xs text-gray-400 font-medium truncate max-w-50 block italic">{{ $msg->subject ?? 'No Subject' }}</span>
                     </td>
                     <td class="px-8 py-6 text-[10px] text-gray-600 font-black uppercase tracking-tighter">
                         {{ $msg->created_at->diffForHumans() }}
