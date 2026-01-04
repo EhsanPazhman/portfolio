@@ -10,16 +10,14 @@ use Illuminate\Support\Facades\Log;
 class Skills extends AdminComponent
 {
     use \App\Traits\HasModal;
-
-    public $profile_id = 1;
     public $item_id;
-    public $type; // 'skill' or 'tech'
+    public $type;
 
     #[Rule('required|min:2|max:255')]
     public $name;
 
     #[Rule('required_if:type,skill')]
-    public $level; // beginner, intermediate, advanced
+    public $level;
 
     public function resetInputFields()
     {
@@ -35,6 +33,7 @@ class Skills extends AdminComponent
         if ($id) {
             $this->edit($id);
         } else {
+            $this->resetInputFields();
             $this->openModal();
         }
     }
@@ -68,7 +67,10 @@ class Skills extends AdminComponent
 
     public function edit($id)
     {
-        $model = $this->type === 'skill' ? Skill::findOrFail($id) : Technology::findOrFail($id);
+        $model = $this->type === 'skill'
+            ? Skill::where('profile_id', $this->profile_id)->findOrFail($id)
+            : Technology::where('profile_id', $this->profile_id)->findOrFail($id);
+
         $this->item_id = $id;
         $this->name = $model->name;
         $this->level = $this->type === 'skill' ? $model->level : null;
@@ -78,10 +80,15 @@ class Skills extends AdminComponent
     public function delete($type, $id)
     {
         try {
-            $type === 'skill' ? Skill::destroy($id) : Technology::destroy($id);
+            if ($type === 'skill') {
+                Skill::where('profile_id', $this->profile_id)->where('id', $id)->delete();
+            } else {
+                Technology::where('profile_id', $this->profile_id)->where('id', $id)->delete();
+            }
             $this->dispatch('notify', 'Deleted successfully');
         } catch (\Exception $e) {
             Log::error('Delete Error: ' . $e->getMessage());
+            $this->dispatch('notify', 'Error during deletion.');
         }
     }
 

@@ -8,7 +8,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Livewire\Admin\AdminComponent;
 
 class Users extends AdminComponent
 {
@@ -66,7 +65,7 @@ class Users extends AdminComponent
             $this->resetInputFields();
         } catch (\Exception $e) {
             Log::error('User Store Error: ' . $e->getMessage());
-            $this->dispatch('notify', 'Error: Transaction failed.');
+            $this->dispatch('notify', 'Error: Operation failed.');
         }
     }
 

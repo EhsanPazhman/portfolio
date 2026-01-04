@@ -7,7 +7,6 @@ use App\Traits\HasModal;
 use Livewire\Attributes\Rule;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
-use App\Livewire\Admin\AdminComponent;
 use Illuminate\Support\Facades\Storage;
 
 class Projects extends AdminComponent
@@ -15,7 +14,6 @@ class Projects extends AdminComponent
     use HasModal, WithFileUploads;
 
     public $project_id;
-    public $profile_id = 1; 
 
     #[Rule('required|min:3|max:255')]
     public $title;
@@ -58,7 +56,7 @@ class Projects extends AdminComponent
         try {
             $project = $this->project_id ? Project::findOrFail($this->project_id) : new Project;
 
-            $project->profile_id  = $this->profile_id ;
+            $project->profile_id = $this->profile_id;
             $project->title = $this->title;
             $project->description = $this->description;
             $project->github_url = $this->github_url;
@@ -111,7 +109,7 @@ class Projects extends AdminComponent
     public function render()
     {
         return view('livewire.admin.projects', [
-            'projects' => Project::latest()->get()
+            'projects' => Project::where('profile_id', $this->profile_id)->latest()->get()
         ]);
     }
 }

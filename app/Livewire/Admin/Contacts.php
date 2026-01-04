@@ -9,7 +9,7 @@ class Contacts extends AdminComponent
 {
     use \App\Traits\HasModal;
 
-    public $selected_contact; // For viewing message details
+    public $selected_contact;
 
     public function viewMessage($id)
     {
