@@ -2,7 +2,7 @@
     <section class="max-w-4xl mx-auto py-16 relative">
         <div class="flex flex-col items-center mb-12">
             <h2 class="text-blue-500 font-black text-xs uppercase tracking-[0.4em] mb-2">My Journey</h2>
-            <h1 class="text-4xl font-black text-gray-900 dark:text-white tracking-tighter text-center">Work Experience
+            <h1 class="text-4xl font-black text-gray-900 tracking-tighter text-center">Work Experience
             </h1>
         </div>
 
@@ -23,9 +23,9 @@
                                 class="font-black text-[10px] uppercase tracking-widest text-blue-500">{{ $experience->start_date }}
                                 — {{ $experience->end_date }}</time>
                         </div>
-                        <h3 class="text-lg font-black text-gray-900 dark:text-white">{{ $experience->title }}</h3>
+                        <h3 class="text-lg font-black text-gray-900">{{ $experience->title }}</h3>
                         <p class="text-sm font-bold text-gray-500 mb-4">{{ $experience->company }}</p>
-                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-2 list-none">
+                        <ul class="text-sm text-gray-500 space-y-2 list-none">
                             @foreach (preg_split('/(?<=\.)\s+/', $experience->description) as $sentence)
                                 @if (trim($sentence) !== '')
                                     <li class="flex gap-2"><span class="text-blue-500">•</span> {{ trim($sentence) }}

@@ -2,7 +2,7 @@
     <div class="max-w-4xl mx-auto">
         <div class="flex flex-col items-center mb-12">
             <h2 class="text-blue-500 font-black text-xs uppercase tracking-[0.4em] mb-2">Get In Touch</h2>
-            <h1 class="text-4xl font-black text-gray-900 dark:text-white tracking-tighter text-center">Let's Build
+            <h1 class="text-4xl font-black text-gray-900 tracking-tighter text-center">Let's Build
                 Something</h1>
         </div>
 
@@ -16,7 +16,7 @@
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2 ml-2">Your
                         Name</label>
                     <input type="text" wire:model.live="name"
-                        class="w-full bg-gray-100 dark:bg-white/5 border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 transition-all text-gray-900 dark:text-white" />
+                        class="w-full bg-gray-100 border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 transition-all text-gray-900" />
                     @error('name')
                         <p class="text-red-500 text-xs mt-2 ml-2">{{ $message }}</p>
                     @enderror
@@ -25,7 +25,7 @@
                     <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2 ml-2">Email
                         Address</label>
                     <input type="email" wire:model.live="email"
-                        class="w-full bg-gray-100 dark:bg-white/5 border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 transition-all text-gray-900 dark:text-white" />
+                        class="w-full bg-gray-100 border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 transition-all text-gray-900" />
                     @error('email')
                         <p class="text-red-500 text-xs mt-2 ml-2">{{ $message }}</p>
                     @enderror
@@ -35,7 +35,7 @@
                 <label
                     class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2 ml-2">Subject</label>
                 <input type="text" wire:model.live="subject"
-                    class="w-full bg-gray-100 dark:bg-white/5 border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 transition-all text-gray-900 dark:text-white" />
+                    class="w-full bg-gray-100 border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 transition-all text-gray-900" />
                 @error('subject')
                     <p class="text-red-500 text-xs mt-2 ml-2">{{ $message }}</p>
                 @enderror
@@ -44,7 +44,7 @@
                 <label
                     class="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-2 ml-2">Message</label>
                 <textarea wire:model.live="message"
-                    class="w-full bg-gray-100 dark:bg-white/5 border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 transition-all text-gray-900 dark:text-white h-40"></textarea>
+                    class="w-full bg-gray-100 border-none rounded-2xl p-4 focus:ring-2 focus:ring-blue-500 transition-all text-gray-900 h-40"></textarea>
                 @error('message')
                     <p class="text-red-500 text-xs mt-2 ml-2">{{ $message }}</p>
                 @enderror

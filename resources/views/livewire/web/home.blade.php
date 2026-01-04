@@ -11,14 +11,14 @@
             <div class="order-2 md:order-1 text-center md:text-left space-y-6">
                 <h2 class="text-blue-500 font-black text-xs uppercase tracking-[0.3em]">Available for work</h2>
                 <h1
-                    class="text-5xl md:text-7xl font-black text-slate-900 dark:text-white leading-none tracking-tighter transition-colors duration-500">
+                    class="text-5xl md:text-7xl font-black text-slate-900 leading-none tracking-tighter transition-colors duration-500">
                     I'm <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-600">{{ $owner->name }}</span>
+                        class="text-transparent bg-clip-text bg-linear-to-r from-blue-500 to-indigo-600">{{ $owner->name }}</span>
                 </h1>
                 <h3
-                    class="text-xl font-bold text-slate-600 dark:text-slate-400 tracking-tight transition-colors duration-500">
+                    class="text-xl font-bold text-slate-600 tracking-tight transition-colors duration-500">
                     {{ $owner->profile->job_title }}</h3>
-                <p class="text-slate-500 dark:text-slate-500 leading-relaxed max-w-md transition-colors duration-500">
+                <p class="text-slate-500 leading-relaxed max-w-md transition-colors duration-500">
                     {{ $owner->profile->bio }}</p>
 
                 <div class="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
@@ -26,7 +26,7 @@
                         class="px-8 py-4 bg-blue-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95">View
                         Work</a>
                     <a href="#contact"
-                        class="px-8 py-4 glass text-slate-900 dark:text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200/50 dark:hover:bg-white/10 transition-all">Contact
+                        class="px-8 py-4 glass text-slate-900 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200/50 transition-all">Contact
                         Me</a>
                 </div>
             </div>
@@ -34,10 +34,10 @@
             <div class="order-1 md:order-2 flex justify-center relative">
                 <div class="relative group">
                     <div
-                        class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000">
+                        class="absolute -inset-1 bg-linear-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000">
                     </div>
                     <img src="{{ asset('storage/' . $owner->profile->avatar) }}" alt="Avatar"
-                        class="relative rounded-full w-64 h-64 md:w-80 md:h-80 object-cover grayscale hover:grayscale-0 transition-all duration-700 border-4 border-white dark:border-[#020617] shadow-2xl" />
+                        class="relative rounded-full w-64 h-64 md:w-80 md:h-80 object-cover grayscale hover:grayscale-0 transition-all duration-700 border-4 border-white shadow-2xl" />
                 </div>
             </div>
         </div>
