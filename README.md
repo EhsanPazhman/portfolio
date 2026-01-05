@@ -33,19 +33,23 @@ This project is designed as a portfolio engine, not a static website.
 ## 📂 Project Structure
 
 app/
- ├── Livewire/            # Livewire components
- ├── Models/              # Eloquent models
+├── Livewire/            # Livewire components
+├── Models/              # Eloquent models
+
 resources/
- ├── views/               # Blade templates
- ├── css/                 # Tailwind styles
- ├── js/                  # Alpine.js & JS logic
+├── views/               # Blade templates
+├── css/                 # Tailwind styles
+├── js/                  # Alpine.js & JS logic
+
 routes/
- ├── auth.php
- ├── web.php
+├── auth.php
+├── web.php
+
 database/
- ├── factories/
- ├── migrations/
- ├── seeders/
+├── factories/
+├── migrations/
+├── seeders/
+
 
 ---
 
@@ -98,17 +102,6 @@ npm run dev
 - Freelancers and remote developers
 - Portfolio SaaS starter project
 - Laravel + Livewire learning project
-
----
-
-## 📌 Roadmap
-
-- Role and permission system
-- Portfolio themes
-- Public demo mode
-- SEO optimization
-- REST / API support
-- Docker support
 
 ---
 
