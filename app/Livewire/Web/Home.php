@@ -10,15 +10,14 @@ class Home extends BaseComponent
     public $owner;
     public function mount()
     {
-        $this->owner = User::where('role', 'admin')->with('profile')->first();
-
-        if (!$this->owner) {
-            abort(404, 'Admin not found');
-        }
+        $this->owner = User::where('email', 'ehsanpazhman@gmail.com')
+            ->where('role', 'admin')
+            ->with('profile')
+            ->firstOrFail();
     }
+
     public function render()
     {
-        $this->owner = User::where('role', 'Admin')->firstOrFail();
         return view('livewire.web.home');
     }
 }

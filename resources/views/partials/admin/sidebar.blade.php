@@ -58,14 +58,26 @@
 
     <!-- User Profile Bottom -->
     <div class="p-4 border-t border-gray-800 bg-[#0d121f] shrink-0">
-        <div class="flex items-center gap-3">
+        <button onclick="Livewire.dispatch('open-settings')" type="button"
+            class="w-full flex items-center gap-3 hover:bg-gray-800/50 p-2 rounded-xl transition-all cursor-pointer group">
+
             <div
-                class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 shrink-0 shadow-lg shadow-blue-500/10">
+                class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 shrink-0 shadow-lg shadow-blue-500/10 overflow-hidden">
+                @if (auth()->user()->profile && auth()->user()->profile->avatar)
+                    <img src="{{ asset('storage/' . auth()->user()->profile->avatar) }}"
+                        class="w-full h-full object-cover">
+                @else
+                    <div class="w-full h-full flex items-center justify-center text-white font-bold text-xs">
+                        {{ substr(auth()->user()->name, 0, 2) }}
+                    </div>
+                @endif
             </div>
-            <div class="sidebar-text overflow-hidden">
-                <p class="text-xs font-bold text-white truncate">Admin Account</p>
-                <p class="text-[10px] text-gray-500 uppercase">Super Admin</p>
+
+            <div class="sidebar-text text-left">
+                <p class="text-xs font-bold text-white">{{ auth()->user()->name }}</p>
+                <p class="text-[10px] text-gray-500 uppercase tracking-widest">Account Settings ⚙️</p>
             </div>
-        </div>
+        </button>
+
     </div>
 </aside>

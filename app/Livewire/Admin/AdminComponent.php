@@ -17,7 +17,13 @@ abstract class AdminComponent extends Component
             abort(403, 'Unauthorized access.');
         }
 
-        $this->profile_id = Auth::id();
+        $profile = Auth::user()->profile;
+
+        if (!$profile) {
+            abort(403, 'Profile not found for the authenticated user.');
+        }
+
+        $this->profile_id = $profile->id;
 
         if (method_exists($this, 'init')) {
             $this->init();
