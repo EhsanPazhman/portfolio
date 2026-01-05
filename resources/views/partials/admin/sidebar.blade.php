@@ -62,7 +62,7 @@
             class="w-full flex items-center gap-3 hover:bg-gray-800/50 p-2 rounded-xl transition-all cursor-pointer group">
 
             <div
-                class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 shrink-0 shadow-lg shadow-blue-500/10 overflow-hidden">
+                class="w-10 h-10 rounded-full bg-linear-to-tr from-blue-500 to-indigo-600 shrink-0 shadow-lg shadow-blue-500/10 overflow-hidden">
                 @if (auth()->user()->profile && auth()->user()->profile->avatar)
                     <img src="{{ asset('storage/' . auth()->user()->profile->avatar) }}"
                         class="w-full h-full object-cover">

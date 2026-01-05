@@ -1,8 +1,13 @@
-# 🚀 ProFolio CMS - Multi-Tenant Developer Portfolio Engine
+# ProFolio CMS
+## Multi-Tenant Developer Portfolio Engine
 
-**ProFolio CMS** is a high-performance, dynamic content management system designed for developers and creatives. Built with the cutting-edge **TALL Stack (Laravel 12, Livewire 3, Alpine.js, Tailwind CSS)**, it moves beyond static portfolios by offering a scalable, multi-user architecture.
+ProFolio CMS is a modern, dynamic, and multi-tenant portfolio management system built with Laravel 12.
+It enables developers to create and manage fully customizable personal portfolios through a clean admin dashboard.
+This project is designed as a portfolio engine, not a static website.
 
-## 🌟 Key Highlights
+---
+
+## 🚀 Features
 
 - **Multi-Tenant Architecture:** Scalable system supporting multiple independent admins, each with their own isolated workspace and profile.
 - **Dynamic Scoped Dashboard:** A personalized dashboard that filters statistics (Projects, Skills, Activity) based on the authenticated profile.
@@ -11,63 +16,117 @@
 - **Modern UI/UX:** A sleek, glassmorphism-inspired dark interface optimized for speed and productivity.
 - **Inquiry Management:** A centralized hub for managing incoming messages and potential leads with real-time notifications.
 
-## 🛠 Technical Stack
 
-- **Framework:** [Laravel 11](laravel.com) (The latest PHP evolution)
-- **Frontend Logic:** [Livewire 3](livewire.laravel.com) & [Laravel Volt](livewire.laravel.comdocs/volt) (Functional API)
-- **Styling:** [Tailwind CSS](tailwindcss.com)
+---
+
+## 🛠 Tech Stack
+
+- **Framework:** [Laravel 11](https://laravel.com) (The latest PHP evolution)
+- **Frontend Logic:** [Livewire 3](https://livewire.laravel.com) & [Laravel Volt](livewire.laravel.com) (Functional API)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com)
 - **Database:** MySQL 8.4 (with complex Eloquent relationships)
-- **Reactivity:** [Alpine.js](alpinejs.dev)
-- **Asset Bundle:** [Vite 6](vitejs.dev)
+- **Reactivity:** [Alpine.js](https://alpinejs.dev)
+- **Asset Bundle:** [Vite 6](https://vitejs.dev)
 
-## 🏗 System Architecture
+---
 
-The core of the system relies on an abstract **`AdminComponent`**. This base class dynamically resolves the `profile_id` for each authenticated admin, ensuring strict data isolation across all Livewire components. By leveraging **Laravel Volt**, the application benefits from reduced boilerplate and significantly faster development cycles.
+## 📂 Project Structure
 
-## 🚀 Installation & Setup
+app/
+ ├── Livewire/            # Livewire components
+ ├── Models/              # Eloquent models
+resources/
+ ├── views/               # Blade templates
+ ├── css/                 # Tailwind styles
+ ├── js/                  # Alpine.js & JS logic
+routes/
+ ├── auth.php
+ ├── web.php
+database/
+ ├── factories/
+ ├── migrations/
+ ├── seeders/
 
-1. **Clone the repository:**
-   ```bash
-   git clone github.com
-   cd profolio-cms
-Use code with caution.
+---
+
+## ⚙️ Installation
+
+Clone the repository:
+
+git clone https://github.com/EhsanPazhman/portfolio.git
+cd portfolio
 
 Install dependencies:
-bash
+
 composer install
 npm install
-Use code with caution.
 
-Environment Configuration:
-bash
+Environment setup:
+
 cp .env.example .env
 php artisan key:generate
-Use code with caution.
 
-Database Migration:
-Update your .env with your database credentials first.
-bash
+Configure database in .env:
+
+DB_DATABASE=portfolio
+DB_USERNAME=root
+DB_PASSWORD=
+
+Run migrations:
+
 php artisan migrate
-Use code with caution.
 
-Storage Link:
-bash
-php artisan storage:link
-Use code with caution.
+Build assets:
 
-Run Development Server:
-bash
-npm run dev
+npm run build
+
+Serve the application:
+
 php artisan serve
-Use code with caution.
 
-📸 Preview
-(Add high-quality screenshots of the Dashboard and the Home profile here)
-🛡️ Security
-This project implements:
-Role-Based Access Control (RBAC).
-Secure CSRF protection for Livewire actions.
-Scoped Eloquent queries to prevent cross-profile data leaks.
-📝 License
-Distributed under the MIT License. See LICENSE for more information.
-Developed by Ehsan Pazhman
+---
+
+## 🧪 Development Mode
+
+npm run dev
+
+---
+
+## 🎯 Use Cases
+
+- Personal developer portfolio
+- Freelancers and remote developers
+- Portfolio SaaS starter project
+- Laravel + Livewire learning project
+
+---
+
+## 📌 Roadmap
+
+- Role and permission system
+- Portfolio themes
+- Public demo mode
+- SEO optimization
+- REST / API support
+- Docker support
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome.
+Feel free to fork the repository and submit a pull request.
+
+---
+
+## 📄 License
+
+This project is open-source and available under the MIT License.
+
+---
+
+## 👤 Author
+
+Ehsanullah Pazhman  
+Backend Developer (Laravel / PHP)  
+GitHub: https://github.com/EhsanPazhman
