@@ -4,99 +4,96 @@ namespace App\Livewire\Admin;
 
 use App\Models\Skill;
 use App\Models\Technology;
-use Livewire\Attributes\Rule;
+use App\Livewire\Forms\SkillForm;
+use App\Traits\HasModal;
+use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Skills & Technologies Administration Component
+ * Standard 2026 clean implementation.
+ */
 class Skills extends AdminComponent
 {
-    use \App\Traits\HasModal;
-    public $item_id;
-    public $type;
+    use HasModal;
 
-    #[Rule('required|min:2|max:255')]
-    public $name;
+    /** @var SkillForm Unified form instance */
+    public SkillForm $form;
 
-    #[Rule('required_if:type,skill')]
-    public $level;
-
-    public function resetInputFields()
+    /**
+     * Get Skills for the profile.
+     */
+    #[Computed]
+    public function skills()
     {
-        $this->name = '';
-        $this->level = '';
-        $this->item_id = null;
-        $this->resetValidation();
+        return Skill::where('profile_id', $this->profile_id)->get();
     }
 
-    public function openModalWithType($type, $id = null)
+    /**
+     * Get Technologies for the profile.
+     */
+    #[Computed]
+    public function technologies()
     {
-        $this->type = $type;
+        return Technology::where('profile_id', $this->profile_id)->get();
+    }
+
+    /**
+     * Open modal with specific context (Skill or Tech).
+     */
+    public function openModalWithType(string $type, ?int $id = null)
+    {
+        $this->form->reset();
+        $this->form->type = $type;
+
         if ($id) {
-            $this->edit($id);
-        } else {
-            $this->resetInputFields();
-            $this->openModal();
+            $model = ($type === 'skill')
+                ? Skill::where('profile_id', $this->profile_id)->findOrFail($id)
+                : Technology::where('profile_id', $this->profile_id)->findOrFail($id);
+
+            $this->form->setEntity($model, $type);
         }
+
+        $this->openModal();
     }
 
-    public function store()
+    /**
+     * Save data after validation.
+     */
+    public function save()
     {
-        $this->validate();
+        $this->form->validate();
 
         try {
-            if ($this->type === 'skill') {
-                Skill::updateOrCreate(['id' => $this->item_id], [
-                    'profile_id' => $this->profile_id,
-                    'name' => $this->name,
-                    'level' => $this->level,
-                ]);
-            } else {
-                Technology::updateOrCreate(['id' => $this->item_id], [
-                    'profile_id' => $this->profile_id,
-                    'name' => $this->name,
-                ]);
-            }
+            $this->form->store($this->profile_id);
 
-            $this->dispatch('notify', ucfirst($this->type) . ' saved');
+            $this->dispatch('notify', ucfirst($this->form->type) . ' Saved Successfully');
             $this->closeModal();
-            $this->resetInputFields();
+            $this->form->reset();
         } catch (\Exception $e) {
             Log::error('Skill/Tech Store Error: ' . $e->getMessage());
-            $this->dispatch('notify', 'Error: Transaction failed.');
+            $this->dispatch('notify', ['type' => 'error', 'message' => 'Operation failed.']);
         }
     }
 
-    public function edit($id)
-    {
-        $model = $this->type === 'skill'
-            ? Skill::where('profile_id', $this->profile_id)->findOrFail($id)
-            : Technology::where('profile_id', $this->profile_id)->findOrFail($id);
-
-        $this->item_id = $id;
-        $this->name = $model->name;
-        $this->level = $this->type === 'skill' ? $model->level : null;
-        $this->isModalOpen = true;
-    }
-
-    public function delete($type, $id)
+    /**
+     * Delete the specified record.
+     */
+    public function delete(string $type, int $id)
     {
         try {
-            if ($type === 'skill') {
-                Skill::where('profile_id', $this->profile_id)->where('id', $id)->delete();
-            } else {
-                Technology::where('profile_id', $this->profile_id)->where('id', $id)->delete();
-            }
+            $query = ($type === 'skill') ? Skill::query() : Technology::query();
+            $query->where('profile_id', $this->profile_id)->findOrFail($id)->delete();
+
             $this->dispatch('notify', 'Deleted successfully');
         } catch (\Exception $e) {
             Log::error('Delete Error: ' . $e->getMessage());
-            $this->dispatch('notify', 'Error during deletion.');
+            $this->dispatch('notify', ['type' => 'error', 'message' => 'Error during deletion.']);
         }
     }
 
     public function render()
     {
-        return view('livewire.admin.skills', [
-            'skills' => Skill::where('profile_id', $this->profile_id)->get(),
-            'techs' => Technology::where('profile_id', $this->profile_id)->get(),
-        ]);
+        return view('livewire.admin.skills');
     }
 }

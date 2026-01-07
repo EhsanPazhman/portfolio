@@ -2,61 +2,69 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\User;
+use App\Livewire\Forms\AccountForm;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\On;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
+/**
+ * Account Settings Component
+ * Standard 2026 Admin Profile Management.
+ */
 class AccountSettings extends Component
 {
     use WithFileUploads;
 
-    public $isModalOpen = false;
-    public $name, $email, $password, $job_title, $bio, $experience_summary, $avatar, $old_avatar;
+    /** @var bool Modal visibility state */
+    public bool $isModalOpen = false;
 
+    /** @var AccountForm The form object instance */
+    public AccountForm $form;
+
+    /**
+     * Listener to trigger settings modal from other components.
+     */
     #[On('open-settings')]
     public function openModal()
     {
         $this->resetErrorBag();
 
+        // Eager load profile to avoid N+1
         $user = auth()->user()->load('profile');
-        $this->name = $user->name;
-        $this->email = $user->email;
-        $this->job_title = $user->profile?->job_title ?? '';
-        $this->bio = $user->profile?->bio ?? '';
-        $this->experience_summary = $user->profile?->experience_summary ?? '';
-        $this->old_avatar = $user->profile?->avatar;
+        $this->form->setAccount($user);
 
         $this->isModalOpen = true;
     }
 
+    /**
+     * Close modal and reset form state.
+     */
+    public function closeModal()
+    {
+        $this->isModalOpen = false;
+        $this->form->reset();
+    }
+
+    /**
+     * Save profile changes after validation.
+     */
     public function save()
     {
-        $user = auth()->user();
+        $this->form->validate();
 
-        $this->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'job_title' => 'required',
-            'avatar' => 'nullable|image|max:1024',
-        ]);
+        try {
+            $this->form->update(auth()->user());
 
-        $user->update([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => $this->password ? Hash::make($this->password) : $user->password,
-        ]);
+            $this->isModalOpen = false;
+            $this->dispatch('notify', 'Profile settings updated successfully!');
 
-        $user->profile()->updateOrCreate(['user_id' => $user->id], [
-            'job_title' => $this->job_title,
-            'bio' => $this->bio,
-            'experience_summary' => $this->experience_summary,
-            'avatar' => $this->avatar ? $this->avatar->store('avatars', 'public') : $this->old_avatar,
-        ]);
-
-        $this->isModalOpen = false;
-        $this->dispatch('notify', 'Profile updated successfully!');
+            // Optional: refresh current page if name/avatar changed in sidebar
+            $this->dispatch('refresh-sidebar');
+        } catch (\Exception $e) {
+            Log::error('Account Settings Update Error: ' . $e->getMessage());
+            $this->dispatch('notify', ['type' => 'error', 'message' => 'Failed to update account.']);
+        }
     }
 
     public function render()

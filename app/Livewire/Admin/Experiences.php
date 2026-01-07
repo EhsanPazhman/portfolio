@@ -3,101 +3,85 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Experience;
-use Livewire\Attributes\Rule;
+use App\Livewire\Forms\ExperienceForm;
+use App\Traits\HasModal;
+use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Experiences Management Component
+ * Optimized for Livewire v3 with Form Objects.
+ */
 class Experiences extends AdminComponent
 {
-    use \App\Traits\HasModal;
+    use HasModal;
 
-    public $experience_id;
+    /** @var ExperienceForm Form instance */
+    public ExperienceForm $form;
 
-    #[Rule('required|min:3|max:255')]
-    public $title;
-
-    #[Rule('required|min:2|max:255')]
-    public $company;
-
-    #[Rule('required|date')]
-    public $start_date;
-
-    #[Rule('nullable|date|after_or_equal:start_date')]
-    public $end_date;
-
-    #[Rule('nullable|string')]
-    public $description;
-
-    public function updated($propertyName)
+    /**
+     * Computed property to retrieve experiences with optimized sorting.
+     */
+    #[Computed]
+    public function experiences()
     {
-        $this->validateOnly($propertyName);
+        return Experience::where('profile_id', $this->profile_id)
+            ->orderBy('start_date', 'desc')
+            ->get();
     }
 
-    public function resetInputFields()
+    /**
+     * Handle store and update operations.
+     */
+    public function save()
     {
-        $this->title = '';
-        $this->company = '';
-        $this->start_date = '';
-        $this->end_date = '';
-        $this->description = '';
-        $this->experience_id = null;
-        $this->resetValidation();
-    }
-
-    public function store()
-    {
-        $this->validate();
+        // Validating via form object
+        $this->form->validate();
 
         try {
-            $experience = $this->experience_id
-                ? Experience::where('profile_id', $this->profile_id)->findOrFail($this->experience_id)
-                : new Experience;
+            $this->form->store($this->profile_id);
 
-            $experience->profile_id = $this->profile_id;
-            $experience->title = $this->title;
-            $experience->company = $this->company;
-            $experience->start_date = $this->start_date;
-            $experience->end_date = $this->end_date;
-            $experience->description = $this->description;
-
-            $experience->save();
-
-            $this->dispatch('notify', $this->experience_id ? 'Experience Updated' : 'Experience Created');
+            $this->dispatch('notify', $this->form->experienceId ? 'Experience Updated' : 'Experience Created');
             $this->closeModal();
-            $this->resetInputFields();
+            $this->form->reset();
         } catch (\Exception $e) {
             Log::error('Experience Store Error: ' . $e->getMessage());
-            $this->dispatch('notify', 'Error: Operation failed.');
+            $this->dispatch('notify', ['type' => 'error', 'message' => 'Operation failed.']);
         }
     }
 
-    public function edit($id)
+    /**
+     * Load experience for edit modal.
+     * @param int $id
+     */
+    public function edit(int $id)
     {
-        $exp = Experience::where('profile_id', $this->profile_id)->findOrFail($id);
-        $this->experience_id = $id;
-        $this->title = $exp->title;
-        $this->company = $exp->company;
-        $this->start_date = $exp->start_date;
-        $this->end_date = $exp->end_date;
-        $this->description = $exp->description;
-        $this->isModalOpen = true;
+        try {
+            $experience = Experience::where('profile_id', $this->profile_id)->findOrFail($id);
+            $this->form->setExperience($experience);
+            $this->openModal();
+        } catch (\Exception $e) {
+            $this->dispatch('notify', ['type' => 'error', 'message' => 'Experience not found.']);
+        }
     }
 
-    public function delete($id)
+    /**
+     * Delete an experience record.
+     * @param int $id
+     */
+    public function delete(int $id)
     {
         try {
             Experience::where('profile_id', $this->profile_id)->findOrFail($id)->delete();
             $this->dispatch('notify', 'Experience Removed');
         } catch (\Exception $e) {
             Log::error('Experience Delete Error: ' . $e->getMessage());
+            $this->dispatch('notify', ['type' => 'error', 'message' => 'Delete failed.']);
         }
     }
 
     public function render()
     {
-        return view('livewire.admin.experiences', [
-            'experiences' => Experience::where('profile_id', $this->profile_id)
-                ->orderBy('start_date', 'desc')
-                ->get()
-        ]);
+        return view('livewire.admin.experiences');
     }
 }
