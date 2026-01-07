@@ -15,8 +15,7 @@
                     I'm <span
                         class="text-transparent bg-clip-text bg-linear-to-r from-blue-500 to-indigo-600">{{ $owner->name }}</span>
                 </h1>
-                <h3
-                    class="text-xl font-bold text-slate-600 tracking-tight transition-colors duration-500">
+                <h3 class="text-xl font-bold text-slate-600 tracking-tight transition-colors duration-500">
                     {{ $owner->profile->job_title }}</h3>
                 <p class="text-slate-500 leading-relaxed max-w-md transition-colors duration-500">
                     {{ $owner->profile->bio }}</p>
@@ -28,6 +27,8 @@
                     <a href="#contact"
                         class="px-8 py-4 glass text-slate-900 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-200/50 transition-all">Contact
                         Me</a>
+                    <livewire:web.download-resume />
+
                 </div>
             </div>
 
