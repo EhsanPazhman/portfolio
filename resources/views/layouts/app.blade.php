@@ -43,6 +43,47 @@
     <livewire:web.social-sidebar />
 
     @livewireScripts
+
+    <!-- Professional Reveal Script (2026 Optimized) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Target sections, footer, and direct children of main (to catch your contact div)
+            const elements = document.querySelectorAll('section, footer, main > div');
+            let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            const observerOptions = {
+                threshold: 0.1, // Trigger when 10% visible
+                rootMargin: '0px 0px -40px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const isScrollingDown = scrollTop > lastScrollTop;
+
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (isScrollingDown) {
+                            entry.target.classList.add('active-down');
+                            entry.target.classList.remove('active-up', 'ready');
+                        } else {
+                            entry.target.classList.add('active-up');
+                            entry.target.classList.remove('active-down', 'ready');
+                        }
+                    } else {
+                        entry.target.classList.remove('active-down', 'active-up');
+                        entry.target.classList.add('ready');
+                    }
+                });
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+            }, observerOptions);
+
+            elements.forEach(el => {
+                el.classList.add('reveal', 'ready');
+                observer.observe(el);
+            });
+        });
+    </script>
+
 </body>
 
 </html>

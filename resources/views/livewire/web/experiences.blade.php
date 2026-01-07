@@ -40,7 +40,6 @@
                         <p class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-6 uppercase tracking-wide">
                             {{ $experience->company }}
                         </p>
-
                         <!-- Description List -->
                         <ul class="text-sm text-slate-600 dark:text-slate-400 space-y-3">
                             @php
