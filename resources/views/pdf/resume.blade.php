@@ -4,85 +4,118 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
+        /* Essential reset for PDF rendering */
+        @page {
+            margin: 40px 50px;
+        }
+
         body {
-            font-family: 'Helvetica', sans-serif;
-            color: #333;
+            font-family: 'Helvetica', Arial, sans-serif;
+            color: #1a202c;
+            /* Deep Charcoal for best readability */
             line-height: 1.5;
             margin: 0;
             padding: 0;
+            background-color: #ffffff;
         }
 
-        .container {
-            padding: 30px;
-        }
-
+        /* Clean Minimal Header */
         .header {
-            text-align: center;
-            background-color: #1a202c;
-            color: white;
-            padding: 40px 20px;
+            border-bottom: 2px solid #1a202c;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .header h1 {
             margin: 0;
-            font-size: 28px;
-            letter-spacing: 2px;
+            font-size: 26px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #000000;
         }
 
         .header p {
             margin: 5px 0 0;
-            opacity: 0.8;
+            font-size: 13px;
+            color: #4a5568;
+            font-weight: 500;
         }
 
         .section {
-            margin-top: 25px;
+            margin-bottom: 25px;
         }
 
+        /* Subtle Section Title */
         .section-title {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
             color: #2d3748;
-            border-bottom: 2px solid #cbd5e0;
-            padding-bottom: 5px;
+            background-color: #f7fafc;
+            /* Very light gray bar */
+            padding: 4px 8px;
             margin-bottom: 15px;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            border-left: 3px solid #1a202c;
         }
 
-        .item {
-            margin-bottom: 15px;
+        /* Layout Table for consistency in PDF */
+        .item-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 5px;
         }
 
         .item-header {
-            display: flex;
-            justify-content: space-between;
+            font-size: 14px;
             font-weight: bold;
-            color: #2d3748;
+            color: #000000;
+            text-align: left;
+        }
+
+        .item-date {
+            text-align: right;
+            font-size: 11px;
+            color: #718096;
+            vertical-align: middle;
         }
 
         .item-sub {
-            font-style: italic;
-            color: #718096;
-            font-size: 14px;
+            font-size: 12px;
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
         .item-desc {
-            margin-top: 5px;
-            font-size: 13px;
-            text-align: justify;
-        }
-
-        .skills-grid {
-            width: 100%;
-        }
-
-        .skill-badge {
-            display: inline-block;
-            background: #edf2f7;
+            font-size: 11.5px;
             color: #4a5568;
-            padding: 4px 10px;
-            border-radius: 4px;
-            margin: 2px;
-            font-size: 12px;
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        /* Clean Skills List */
+        .skills-wrapper {
+            margin-top: 10px;
+        }
+
+        .skill-item {
+            display: inline-block;
+            color: #1a202c;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 15px;
+            margin-bottom: 5px;
+        }
+
+        .skill-item:after {
+            content: " • ";
+            color: #cbd5e0;
+            margin-left: 15px;
+        }
+
+        .skill-item:last-child:after {
+            content: "";
         }
     </style>
 </head>
@@ -91,17 +124,22 @@
 
     <div class="header">
         <h1>{{ $fullname }}</h1>
-        <p>{{ $job_title }} | {{ $email }}</p>
+        <p>{{ $job_title }} &nbsp;|&nbsp; {{ $email }}</p>
     </div>
 
     <div class="container">
         <!-- EXPERIENCE -->
         <div class="section">
-            <div class="section-title">Work Experience</div>
+            <div class="section-title">Professional Experience</div>
             @foreach ($experiences as $exp)
-                <div class="item">
-                    <div class="item-header">{{ $exp->company }} - {{ $exp->position }}</div>
-                    <div class="item-sub">{{ $exp->start_date }} to {{ $exp->end_date ?? 'Present' }}</div>
+                <div style="margin-bottom: 18px;">
+                    <table class="item-table">
+                        <tr>
+                            <td class="item-header">{{ $exp->position }}</td>
+                            <td class="item-date">{{ $exp->start_date }} — {{ $exp->end_date ?? 'Present' }}</td>
+                        </tr>
+                    </table>
+                    <div class="item-sub">{{ $exp->company }}</div>
                     <div class="item-desc">{{ $exp->description }}</div>
                 </div>
             @endforeach
@@ -109,32 +147,21 @@
 
         <!-- PROJECTS -->
         <div class="section">
-            <div class="section-title">Projects</div>
+            <div class="section-title">Featured Projects</div>
             @foreach ($projects as $project)
-                <div class="item">
-                    <div class="item-header">{{ $project->title }}</div>
+                <div style="margin-bottom: 12px;">
+                    <div class="item-header" style="font-size: 13px;">{{ $project->title }}</div>
                     <div class="item-desc">{{ $project->description }}</div>
                 </div>
             @endforeach
         </div>
 
-        {{-- <!-- EDUCATION -->
-        <div class="section">
-            <div class="section-title">Education</div>
-            @foreach ($education as $edu)
-                <div class="item">
-                    <div class="item-header">{{ $edu->degree }}</div>
-                    <div class="item-sub">{{ $edu->university }} | {{ $edu->graduation_year }}</div>
-                </div>
-            @endforeach
-        </div> --}}
-
         <!-- SKILLS -->
         <div class="section">
             <div class="section-title">Technical Skills</div>
-            <div class="skills-grid">
+            <div class="skills-wrapper">
                 @foreach ($skills as $skill)
-                    <span class="skill-badge">{{ $skill->name }}</span>
+                    <span class="skill-item">{{ $skill->name }}</span>
                 @endforeach
             </div>
         </div>
